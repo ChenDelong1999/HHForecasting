@@ -4,6 +4,14 @@ HHU 3209 flood forecasting codebase.
 
 
 ## Install
+
+- Clone this repo:
+
+    ```bash
+    git clone https://github.com/ChenDelong1999/HHForecasting.git
+    cd HHForecasting
+    ```
+  
 - Create a conda virtual environment and activate it:
 
     ```bash
@@ -11,13 +19,7 @@ HHU 3209 flood forecasting codebase.
     conda activate HHForecasting
     ```
 
-- Install CUDA Toolkit 11.3 (link) and cudnn==8.2.1 (link), then install PyTorch==1.10.1:
-
-    ```bash
-    conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch -y
-    # if you prefer other cuda versions, please choose suitable pytorch versions
-    # see: https://pytorch.org/get-started/locally/
-    ```
+- Install PyTorch [(official website)](https://pytorch.org/get-started/locally/).
 
 - Install other requirements:
     ```bash
@@ -26,7 +28,9 @@ HHU 3209 flood forecasting codebase.
 
 ## Data Preparation
 
-See https://www.yuque.com/bgh8fr/wh55rz/asa9wm
+See https://www.yuque.com/bgh8fr/wh55rz/asa9wm for data descriptions.
+
+Ask Delong Chen for a copy of data.zip, extract and replace the `/dataset` folder. **PLEASE KEEP IT SECRET !!!**
 
 ```bash
 $ tree dataset /f
@@ -47,24 +51,23 @@ $ tree dataset /f
 
 ## Training
 
-- Train deep learning models
+- Train deep learning models:
   ```bash
   python main.py --dataset TunXi --model TCN
   ```
   - `--dataset`:`'TunXi'` or `'ChangHua'` or `'Toy'`
   - `--model`:  `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'`
 
-  see `main.py` for more details.
 
 
-- Monitoring training procedure from tensorboard
+- Monitoring training procedure from tensorboard:
   
   ```bash
   tensorboard --logdir runs
   ```
   
 
-- Train machin learning models
+- Train machine learning models:
   ```bash
   python sklearn_baselines.py
   ```
