@@ -94,10 +94,17 @@ $ tree dataset /f
 
 - Few-shot supervised:
   ```bash
-  python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d --few_shot True
+  python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d --few_shot_num 10
   ```
-
+  'few_shot_num' denotes the number of experiments on each training set scale. 
+   
 - Unsupervised learning:
+  Stage 1, pretraining with TunXi dataset
+  ```bash
+  python train_stage1.py --dataset TunXi --structure residual --backbone TCN --head conv1d
+  ```
+  
+  Stage 2, Adversarial domain adaptation
   ```bash
   python train_stage2.py --backbone TCN --pre_structure residual --pre_backbone TCN --pre_head conv1d --pretrained_weights runs/<your pretraining run log dir>/last.pt
   ```
