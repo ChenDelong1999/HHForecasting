@@ -94,7 +94,7 @@ $ tree dataset /f
 
 - Few-shot supervised:
   ```bash
-  python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d --few_shot_num 10
+  python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d --few_shot_num 10 --batch_size 16
   ```
   'few_shot_num' denotes the number of experiments on each training set scale. 
    
