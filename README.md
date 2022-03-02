@@ -83,7 +83,7 @@ $ tree dataset /f
 ## Experimental repetition (https://www.yuque.com/bgh8fr/wh55rz/aqify1)
 - Fully supervised (Deep learning):
   ```bash
-  python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d
+  python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d --N_EPOCH 500
   ```
   - `--structure`:`'residual'` or `'direct'` or `'joint'`
 
@@ -94,7 +94,7 @@ $ tree dataset /f
 
 - Few-shot supervised:
   ```bash
-  python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d --few_shot_num 10 --batch_size 16
+  python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d --few_shot_num 10 --batch_size 16 --N_EPOCH 500
   ```
   'few_shot_num' denotes the number of experiments on each training set scale. 
    
