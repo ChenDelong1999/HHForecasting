@@ -45,40 +45,6 @@ $ tree dataset /f
     └───documentation
             ...
 ```
-
-## Training
-
-- Stage 1:Pretrain deep learning models with TunXi dataset:
-  ```bash
-  python train_stage1.py --dataset TunXi --structure residual --backbone TCN --head conv1d
-  ```
-  - `--dataset`:`'TunXi'`
-  - `--structure`:`'residual'` or `'direct'` or `'joint'`
-  - `--backbone`:  `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'` or `'STGCN'`
-  - `--head`:  `'linear'` or `'conv1d'`
-
-- Stage 2:Adversarial domain adaptation:
-  ```bash
-  python train_stage2.py --structure residual --backbone TCN --pre_backbone TCN --pre_head conv1d --pretrained_weights runs/<your stage 1 run log dir>/last.pt
-  ```
-  - `--structure`:`'residual'` or `'direct'`
-  - `--backbone`:  `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'` or `'STGCN'`
-  - `--pre_backbone`:  `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'` or `'STGCN'`
-  - `--pre_head`:  `'linear'` or `'conv1d'`
-  - `--pretrained_weights`:  runs/<your stage 1 run log dir>/last.pt
-
-
-- Monitoring training procedure from tensorboard:
-  
-  ```bash
-  tensorboard --logdir runs
-  ```
-  
-
-- Train machine learning models:
-  ```bash
-  python sklearn_baselines.py
-  ```
   
 ## Experimental repetition (https://www.yuque.com/bgh8fr/wh55rz/aqify1)
 - Fully supervised (Deep learning):
@@ -94,7 +60,7 @@ $ tree dataset /f
 
 - Few-shot supervised:
   ```bash
-  python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d --few_shot_num 10 --batch_size 16
+  python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d --few_shot_num 20 --batch_size 16 --N_EPOCH 1000
   ```
   'few_shot_num' denotes the number of experiments on each training set scale. 
    
@@ -103,9 +69,22 @@ $ tree dataset /f
   ```bash
   python train_stage1.py --dataset TunXi --structure residual --backbone TCN --head conv1d
   ```
-  
+  - `--structure`:`'residual'` or `'direct'`
+  - `--backbone`:  `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'` or `'STGCN'`
+  - `--head`:  `'linear'` or `'conv1d'`
+
   Stage 2, Adversarial domain adaptation
   ```bash
   python train_stage2.py --backbone TCN --pre_structure residual --pre_backbone TCN --pre_head conv1d --pretrained_weights runs/<your pretraining run log dir>/last.pt
   ```
+  - `--backbone`:  `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'` or `'STGCN'`
   - `--pre_structure`:`'residual'` or `'direct'`
+  - `--pre_backbone`:  `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'` or `'STGCN'`
+  - `--pre_head`:  `'linear'` or `'conv1d'`
+  - `--pretrained_weights`:  runs/<your stage 1 run log dir>/last.pt
+
+- Monitoring training procedure from tensorboard:
+  
+  ```bash
+  tensorboard --logdir runs
+  ```
