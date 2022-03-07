@@ -46,7 +46,7 @@ $ tree dataset /f
             ...
 ```
   
-## Experimental repetition (https://www.yuque.com/bgh8fr/wh55rz/aqify1)
+## Experimental repetition (https://www.yuque.com/bgh8fr/wh55rz/sw64fp)
 - Fully supervised (Deep learning):
   ```bash
   python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d
