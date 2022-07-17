@@ -6,14 +6,15 @@ import numpy as np
 from dataset import CSVDataset
 
 
-def get_metrics(model):
-    TRAIN_DC = model.score(train_set.inputs, train_set.targets)
-    TEST_DC = model.score(test_set.inputs, test_set.targets)
 
-    Train_runoff_prediction = model.predict(train_set.inputs)
-    TRAIN_MSE = np.average((train_set.targets - Train_runoff_prediction) ** 2)
-    Test_runoff_prediction = model.predict(test_set.inputs)
-    TEST_MSE = np.average((test_set.targets - Test_runoff_prediction) ** 2)
+def get_metrics(model):
+    TRAIN_DC = model.score(train_set.raindrop, train_set.runoff)
+    TEST_DC = model.score(test_set.raindrop, test_set.runoff)
+
+    Train_runoff_prediction = model.predict(train_set.raindrop)
+    TRAIN_MSE = np.average((train_set.runoff - Train_runoff_prediction) ** 2)
+    Test_runoff_prediction = model.predict(test_set.raindrop)
+    TEST_MSE = np.average((test_set.runoff - Test_runoff_prediction) ** 2)
 
     return round(TRAIN_MSE, 2), round(TEST_MSE, 2), round(TRAIN_DC, 2), round(TEST_DC, 2)
 
@@ -40,6 +41,6 @@ if __name__ == '__main__':
         print('Model, TRAIN_MSE, TEST_MSE, TRAIN_DC, TEST_DC')
         for i in range(len(models)):
             model = models[i]
-            model.fit(train_set.inputs, train_set.targets)
+            model.fit(train_set.raindrop, train_set.runoff)
             metrics = get_metrics(model)
             print(f'{names[i]}, {str(metrics)[1:-1]}')
