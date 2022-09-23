@@ -103,6 +103,7 @@ def train(model, train_loader, test_loader, writer, save_path):
 
         if TRAIN_DC > 95 and args.few_shot_num is not None:
             break
+        #scheduler.step()
 
     # Save the features of TunXi
     if args.dataset == 'TunXi':
@@ -182,7 +183,7 @@ if __name__ == '__main__':
 
     if args.few_shot_num is not None:
 
-        for scale in np.arange(start=0.02, stop=0.07, step=0.005):
+        for scale in np.arange(start=0.025, stop=0.07, step=0.005):
             for start in np.arange(start=0, stop=args.few_shot_num, step=1):
                 args.training_set_scale = round(scale, 3)
                 args.training_set_start = round(start, 3)
