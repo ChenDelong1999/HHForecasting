@@ -28,7 +28,7 @@ class CSVDataset(torch.utils.data.Dataset):
         df = df.dropna()
         data = np.array(df)
 
-        raindrop = data[:-self.forecast_range, 1:]
+        raindrop = data[:-self.forecast_range, :]
         raindrop = (raindrop - np.min(raindrop, axis=0)) / (np.max(raindrop, axis=0) - np.min(raindrop, axis=0))
         runoff_history = data[:-self.forecast_range, 0]
         runoff = data[self.forecast_range:, 0]
