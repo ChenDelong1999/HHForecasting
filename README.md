@@ -45,7 +45,7 @@ $ tree dataset /f
     └───documentation
             ...
 ```
-  
+
 ## Experimental repetition (https://www.yuque.com/bgh8fr/wh55rz/sw64fp)
 - Fully supervised (Deep learning):
   ```bash
@@ -63,7 +63,7 @@ $ tree dataset /f
   python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d --few_shot_num 20 --batch_size 16 --N_EPOCH 1000
   ```
   'few_shot_num' denotes the number of experiments on each training set scale. 
-   
+  
 - Unsupervised learning:
   Stage 1, pretraining with TunXi dataset
   ```bash
@@ -88,5 +88,3 @@ $ tree dataset /f
   ```bash
   tensorboard --logdir runs
   ```
-
-## Test
