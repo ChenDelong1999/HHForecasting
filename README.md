@@ -1,6 +1,10 @@
-# HHForecasting
+# 🎉HHForecasting
 
 HHU 3209 flood forecasting codebase.
+
+[TOC]
+
+**paper：**[FloodDAN: Unsupervised Flood Forecasting based on Adversarial Domain Adaptation | IEEE Conference Publication | IEEE Xplore](https://ieeexplore.ieee.org/document/9862723)
 
 
 ## Install
@@ -30,23 +34,56 @@ HHU 3209 flood forecasting codebase.
 
 See https://www.yuque.com/bgh8fr/wh55rz/asa9wm for data descriptions.
 
-Ask Delong Chen for a copy of data.zip, extract and replace the `/dataset` folder. **PLEASE KEEP IT SECRET !!!**
+| DATASET        | LINK                                                         |
+| -------------- | ------------------------------------------------------------ |
+| ChangHua&TunXi | https://pan.baidu.com/s/1Pp9Lm9fYs7su8K34SnTv2w <br/>access cpde：82w7 |
+| WaterBench     | https://pan.baidu.com/s/1Q_uiDNwLipFS50D-8I_YiQ <br/>access：03l0 |
+
+
 
 ```bash
 $ tree dataset /f
 
 .. HHForecasting\dataset
-├───ChangHua
-│       data.csv
+├── ChangHua
+│   └── data.csv
 │
-└───TunXi
-    │   data.csv
-    │
-    └───documentation
-            ...
+├── TunXi
+│   ├── data.csv
+│   └── documentation
+│       
+└── WaterBench
+    ├── 1609_data.csv
+    ├── 521_data.csv
+    ├── 536_data.csv
+    ├── 539_data.csv
+    ├── 552_data.csv
+    ├── 557_data.csv
+    ├── 562_data.csv
+    ├── 563_data.csv
+    ├── 566_data.csv
+    ├── 569_data.csv
+    ├── 587_data.csv
+    ├── 588_data.csv
+    ├── 608_data.csv
+    ├── 611_data.csv
+    ├── 613_data.csv
+    ├── 624_data.csv
+    ├── 626_data.csv
+    ├── 637_data.csv
+    ├── 638_data.csv
+    ├── 649_data.csv
+    ├── 657_data.csv
+    ├── 660_data.csv
+    ├── 663_data.csv
+    ├── 668_data.csv
+    └── 671_data.csv
 ```
 
+
+
 ## Experimental repetition (https://www.yuque.com/bgh8fr/wh55rz/sw64fp)
+
 - Fully supervised (Deep learning):
   ```bash
   python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d
@@ -88,3 +125,4 @@ $ tree dataset /f
   ```bash
   tensorboard --logdir runs
   ```
+
