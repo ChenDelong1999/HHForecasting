@@ -33,7 +33,7 @@ See https://www.yuque.com/bgh8fr/wh55rz/asa9wm for data descriptions.
 
 | DATASET        | LINK                                                         |
 | -------------- | ------------------------------------------------------------ |
-| ChangHua&TunXi | https://pan.baidu.com/s/1Pp9Lm9fYs7su8K34SnTv2w <br/>access code：82w7 |
+| ChangHua&TunXi | https://pan.baidu.com/s/1Pp9Lm9fYs7su8K34SnTv2w <br/>access code：private|
 | WaterBench     | https://pan.baidu.com/s/1Q_uiDNwLipFS50D-8I_YiQ <br/>access code：03l0 |
 
 
