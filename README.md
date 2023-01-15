@@ -116,29 +116,29 @@ See the [FloodDAN paper](https://arxiv.org/abs/2206.08105) and [YuQue Doc](https
 
 ## Our Papers
 
-> - [Delong Chen](https://chendelong.world/), [Ruizhi Zhou](https://www.researchgate.net/scientific-contributions/Ruizhi-Zhou-2223957483), [Yanling Pan](https://www.linkedin.com/in/yanling-pan-2399821a1/?originalSubdomain=cn), [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm): 
+- [Delong Chen](https://chendelong.world/), [Ruizhi Zhou](https://www.researchgate.net/scientific-contributions/Ruizhi-Zhou-2223957483), [Yanling Pan](https://www.linkedin.com/in/yanling-pan-2399821a1/?originalSubdomain=cn), [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm): 
  
->  [**A Simple Baseline for Adversarial Domain Adaptation-based Unsupervised Flood Forecasting**](https://arxiv.org/abs/2206.08105)
+  [**A Simple Baseline for Adversarial Domain Adaptation-based Unsupervised Flood Forecasting**](https://arxiv.org/abs/2206.08105)
 
->  Technical Report, ArXiv, CoRR abs/2206.08105 (2022)
-
-
->- [Delong Chen](https://chendelong.world/), [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm), Zheqi Zhang, Xiaomin Lu, [Zewen Li](https://zewenli.cn/): 
-
->  [**Significant Wave Height Prediction based on Wavelet Graph Neural Network**](https://arxiv.org/abs/2107.09483)
-
->  2021 IEEE 4th International Conference on Big Data and Artificial Intelligence (BDAI)
+  Technical Report, ArXiv, CoRR abs/2206.08105 (2022)
 
 
-> - [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm), Xiaomin Lu, Dan Xu, [Wenwen Dai](https://www.researchgate.net/profile/Dai-Wenwen), Huizhou Li: 
+- [Delong Chen](https://chendelong.world/), [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm), Zheqi Zhang, Xiaomin Lu, [Zewen Li](https://zewenli.cn/): 
 
->  [**Research progress of ocean waves forecasting method**](https://jour.hhu.edu.cn/hhdxxbzren/article/abstract/202105001). 
+  [**Significant Wave Height Prediction based on Wavelet Graph Neural Network**](https://arxiv.org/abs/2107.09483)
 
->  Journal of Hohai University (Natural Sciences)
+  2021 IEEE 4th International Conference on Big Data and Artificial Intelligence (BDAI)
 
 
-> - [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm), [Feng Xu](https://cies.hhu.edu.cn/2013/0507/c4122a54830/page.psp), [Sai Yang](https://dqxy.ntu.edu.cn/2019/0904/c1290a48382/page.htm): 
+- [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm), Xiaomin Lu, Dan Xu, [Wenwen Dai](https://www.researchgate.net/profile/Dai-Wenwen), Huizhou Li: 
 
->  [**A Flood Forecasting Model Based on Deep Learning Algorithm via Integrating Stacked Autoencoders with BP Neural Network**](https://ieeexplore.ieee.org/document/7966716). 
+  [**Research progress of ocean waves forecasting method**](https://jour.hhu.edu.cn/hhdxxbzren/article/abstract/202105001). 
 
->  2017 IEEE Third International Conference on Multimedia Big Data (BigMM)
+  Journal of Hohai University (Natural Sciences)
+
+
+- [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm), [Feng Xu](https://cies.hhu.edu.cn/2013/0507/c4122a54830/page.psp), [Sai Yang](https://dqxy.ntu.edu.cn/2019/0904/c1290a48382/page.htm): 
+
+  [**A Flood Forecasting Model Based on Deep Learning Algorithm via Integrating Stacked Autoencoders with BP Neural Network**](https://ieeexplore.ieee.org/document/7966716). 
+
+  2017 IEEE Third International Conference on Multimedia Big Data (BigMM)
