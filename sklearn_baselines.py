@@ -28,9 +28,10 @@ if __name__ == '__main__':
     random_forest = ensemble.RandomForestRegressor(n_estimators=64)
     gradient_boosting = ensemble.GradientBoostingRegressor(n_estimators=64)
     bagging = ensemble.BaggingRegressor()
+    ridge = sklearn.linear_model.Ridge()
 
-    models = [svr, decision_tree, linear_regression, kNN, random_forest, gradient_boosting, bagging]
-    names = ['SVR', 'Decision Tree', 'Linear Regression', 'k-NN', 'RandomForest', 'Gradient Boosting', 'Bagging']
+    models = [svr, decision_tree, linear_regression, kNN, random_forest, gradient_boosting, bagging,ridge]
+    names = ['SVR', 'Decision Tree', 'Linear Regression', 'k-NN', 'RandomForest', 'Gradient Boosting', 'Bagging','Ridge']
 
     for dataset_name in ['ChangHua', 'TunXi']:
         train_set = CSVDataset(forecast_range=6, dataset=dataset_name, mode='train',
