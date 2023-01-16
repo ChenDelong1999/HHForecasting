@@ -1,6 +1,6 @@
 # HH💦Forecasting
 
-Welcome to HHU CIES ([河海大学](https://www.hhu.edu.cn/), [计算机与信息学院](https://cies.hhu.edu.cn/main.psp)) 3209 ([Prof. Fan Liu's lab](https://www.researchgate.net/lab/Fan-Liu-Lab-2)) time-series forecasting codebase! 
+Welcome to HHU CIES ([河海大学](https://www.hhu.edu.cn/), [计算机与信息学院](https://cies.hhu.edu.cn/main.psp)) 3209 ([Prof. Fan Liu's lab](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm)) time-series forecasting codebase! 
 
 This codebase is under active development. If you find any bugs or have any suggestions for code improvement, please raise an issue, thanks🎈
 
@@ -60,67 +60,73 @@ $ tree dataset /f
     └── 671_data.csv
 ```
 
+## Flood Forecasting
+
+### Machine learning models:
+
+```bash
+python sklearn_baselines.py
+```
+  
+### Deep learning models
+
+```bash
+python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d
+```
+- `--structure`: `'residual'` or `'direct'` or `'joint'`
+
+
+### Few-shot learning
+
+```bash
+python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d --few_shot_num 20 --batch_size 16 --N_EPOCH 1000
+  ```
+'few_shot_num' denotes the number of experiments on each training set scale. 
 
 
 ## FloodDAN Re-implementation
 
-See the [FloodDAN paper](https://arxiv.org/abs/2206.08105) and [YuQue Doc](https://www.yuque.com/bgh8fr/wh55rz/sw64fp) for details of this implementation.
+See our FloodDAN paper below and [YuQue Doc](https://www.yuque.com/bgh8fr/wh55rz/sw64fp) for details of this implementation.
 
-- Fully supervised (Deep learning):
-  ```bash
-  python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d
-  ```
-  - `--structure`: `'residual'` or `'direct'` or `'joint'`
-
-
-- Fully supervised (Machine learning):
-
-  ```bash
-  python sklearn_baselines.py
-  ```
-
-- Few-shot supervised:
-  ```bash
-  python train_stage1.py --dataset ChangHua --structure residual --backbone TCN --head conv1d --few_shot_num 20 --batch_size 16 --N_EPOCH 1000
-  ```
-  'few_shot_num' denotes the number of experiments on each training set scale. 
+> [Delong Chen](https://chendelong.world/), [Ruizhi Zhou](https://www.researchgate.net/scientific-contributions/Ruizhi-Zhou-2223957483), [Yanling Pan](https://www.linkedin.com/in/yanling-pan-2399821a1/?originalSubdomain=cn), [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm): [**A Simple Baseline for Adversarial Domain Adaptation-based Unsupervised Flood Forecasting**](https://arxiv.org/abs/2206.08105). _Technical Report, ArXiv, CoRR abs/2206.08105 (2022)_.
   
-- Unsupervised learning:
-
-  **Stage 1**, pretraining with TunXi dataset
+### **Stage 1**, pretraining with TunXi dataset
 
   ```bash
   python train_stage1.py --dataset TunXi --structure residual --backbone TCN --head conv1d
-  ```
-  - `--structure`: `'residual'` or `'direct'`
-  - `--backbone`: `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'` or `'STGCN'`
-  - `--head`: `'linear'` or `'conv1d'`
+   ```
 
-  **Stage 2,** Adversarial domain adaptation
+- `--structure`: `'residual'` or `'direct'`
+- `--backbone`: `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'` or `'STGCN'`
+- `--head`: `'linear'` or `'conv1d'`
+
+
+###  **Stage 2,** Adversarial domain adaptation
 
   ```bash
   python train_stage2.py --backbone TCN --pre_structure residual --pre_backbone TCN --pre_head conv1d --pretrained_weights runs/<your pretraining run log dir>/last.pt
-  ```
-  - `--backbone`: `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'` or `'STGCN'`
-  - `--pre_structure`: `'residual'` or `'direct'`
-  - `--pre_backbone`: `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'` or `'STGCN'`
-  - `--pre_head`: `'linear'` or `'conv1d'`
-  - `--pretrained_weights`:  runs/<your stage 1 run log dir>/last.pt
+   ```
+
+- `--backbone`: `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'` or `'STGCN'`
+- `--pre_structure`: `'residual'` or `'direct'`
+- `--pre_backbone`: `'TCN'` or `'ANN'` or `'LSTM'` or `'GRU'` or `'RNN'` or `'STGCN'`
+- `--pre_head`: `'linear'` or `'conv1d'`
+- `--pretrained_weights`:  runs/<your stage 1 run log dir>/last.pt
 
 
-- Monitoring training procedure from tensorboard:
+Monitoring training procedure from tensorboard:
   
   ```bash
   tensorboard --logdir runs
   ```
 
 
-## Our Papers
+## Papers
 
-- [Delong Chen](https://chendelong.world/), [Ruizhi Zhou](https://www.researchgate.net/scientific-contributions/Ruizhi-Zhou-2223957483), [Yanling Pan](https://www.linkedin.com/in/yanling-pan-2399821a1/?originalSubdomain=cn), [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm): [**A Simple Baseline for Adversarial Domain Adaptation-based Unsupervised Flood Forecasting**](https://arxiv.org/abs/2206.08105). Technical Report, ArXiv, CoRR abs/2206.08105 (2022).
+- [Delong Chen](https://chendelong.world/), [Ruizhi Zhou](https://www.researchgate.net/scientific-contributions/Ruizhi-Zhou-2223957483), [Yanling Pan](https://www.linkedin.com/in/yanling-pan-2399821a1/?originalSubdomain=cn), [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm): [**A Simple Baseline for Adversarial Domain Adaptation-based Unsupervised Flood Forecasting**](https://arxiv.org/abs/2206.08105). _Technical Report, ArXiv, CoRR abs/2206.08105 (2022)_.
 
-- [Delong Chen](https://chendelong.world/), [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm), Zheqi Zhang, Xiaomin Lu, [Zewen Li](https://zewenli.cn/): [**Significant Wave Height Prediction based on Wavelet Graph Neural Network**](https://arxiv.org/abs/2107.09483). 2021 IEEE 4th International Conference on Big Data and Artificial Intelligence (BDAI).
+- [Delong Chen](https://chendelong.world/), [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm), Zheqi Zhang, Xiaomin Lu, [Zewen Li](https://zewenli.cn/): [**Significant Wave Height Prediction based on Wavelet Graph Neural Network**](https://arxiv.org/abs/2107.09483). _2021 IEEE 4th International Conference on Big Data and Artificial Intelligence (BDAI)_.
 
-- [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm), Xiaomin Lu, Dan Xu, [Wenwen Dai](https://www.researchgate.net/profile/Dai-Wenwen), Huizhou Li: [**Research progress of ocean waves forecasting method**](https://jour.hhu.edu.cn/hhdxxbzren/article/abstract/202105001). Journal of Hohai University (Natural Sciences).
+- [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm), Xiaomin Lu, Dan Xu, [Wenwen Dai](https://www.researchgate.net/profile/Dai-Wenwen), Huizhou Li: [**Research progress of ocean waves forecasting method**](https://jour.hhu.edu.cn/hhdxxbzren/article/abstract/202105001). _Journal of Hohai University (Natural Sciences)_.
 
-- [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm), [Feng Xu](https://cies.hhu.edu.cn/2013/0507/c4122a54830/page.psp), [Sai Yang](https://dqxy.ntu.edu.cn/2019/0904/c1290a48382/page.htm): [**A Flood Forecasting Model Based on Deep Learning Algorithm via Integrating Stacked Autoencoders with BP Neural Network**](https://ieeexplore.ieee.org/document/7966716). 2017 IEEE Third International Conference on Multimedia Big Data (BigMM).
+- [Fan Liu](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm), [Feng Xu](https://cies.hhu.edu.cn/2013/0507/c4122a54830/page.psp), [Sai Yang](https://dqxy.ntu.edu.cn/2019/0904/c1290a48382/page.htm): [**A Flood Forecasting Model Based on Deep Learning Algorithm via Integrating Stacked Autoencoders with BP Neural Network**](https://ieeexplore.ieee.org/document/7966716). _2017 IEEE Third International Conference on Multimedia Big Data (BigMM)_.
