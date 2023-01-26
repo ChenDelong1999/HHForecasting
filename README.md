@@ -1,6 +1,6 @@
 # HH💦Forecasting
 
-Welcome to HHU CIES ([河海大学](https://www.hhu.edu.cn/), [计算机与信息学院](https://cies.hhu.edu.cn/main.psp)) 3209 ([Prof. Fan Liu's lab](https://cies.hhu.edu.cn/2013/0508/c4122a54931/page.htm)) time-series forecasting codebase! 
+Welcome to Hohai University (河海大学) [多模态人工智能实验室 (Artificial Intelligence of Multi-modality Group, AIM Group)](https://multimodality.group/) time-series forecasting codebase! 
 
 This codebase is under active development. If you find any bugs or have any suggestions for code improvement, please raise an issue, thanks🎈
 
