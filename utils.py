@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import torch
+import math
+
 
 sns.set_theme(style="whitegrid")
 
@@ -24,6 +26,17 @@ def get_deterministic_coefficient(predictions, targets):
 
 def get_mean_squared_error(predictions, targets):
     return np.mean((predictions - targets) ** 2)
+
+
+def get_Nash_efficiency_coefficient(predictions, targets):
+    return 1-np.sum((predictions-targets)**2)/np.sum((targets-np.mean(targets))**2)
+
+
+def get_Kling_Gupta_efficiency(predictions, targets):
+    kge_r = np.corrcoef(targets, predictions)[1][0]
+    kge_a = np.std(predictions)/np.std(targets)
+    kge_b = np.mean(predictions)/np.mean(targets)
+    return 1-np.sqrt((kge_r-1)**2+(kge_a-1)**2+(kge_b-1)**2)
 
 
 def plot_result_(y_predict, y, index):  # origin version
@@ -86,9 +99,12 @@ def init_results(args, stage):
         results[key] = []
 
     if stage == 1:
-        metrics = ['TRAIN_MSE', 'TEST_MSE', 'TRAIN_DC', 'TEST_DC']
+        metrics = [ 'TRAIN_MSE', 'TEST_MSE', 
+                    'TRAIN_DC', 'TEST_DC', 
+                    'TRAIN_NSE', 'TEST_NSE',
+                    'TRAIN_KGE', 'TEST_KGE']
     if stage == 2:
-        metrics = ['TEST_MSE', 'TEST_DC']
+        metrics = ['TEST_MSE', 'TEST_DC', 'TEST_NSE', 'TEST_KGE']
 
     for metric in metrics:
         results[metric] = []

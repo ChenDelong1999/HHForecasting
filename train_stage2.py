@@ -7,7 +7,7 @@ import torch.nn.init as init
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 from torch.optim import lr_scheduler
-from utils import get_deterministic_coefficient, get_mean_squared_error, print_results, \
+from utils import get_deterministic_coefficient, get_mean_squared_error, get_Nash_efficiency_coefficient, get_Kling_Gupta_efficiency,print_results, \
     freeze, plot_result, init_results, print_args
 from adversarial_domain_adaptation_utils import GANDataset, Discriminator_1DCNN, calc_gradient_penalty_ST, plot_feature_tsne, plot_backbone_features
 from model.Raindrop_encoder import Raindrop_encoder
@@ -70,13 +70,23 @@ def evaluate(G, D, test_model, test_loader, TX_features, writer, epoch, total_st
     ideal_w = np.average(targets) / np.average(predictions)
     MSE = get_mean_squared_error(predictions, targets)
     DC = get_deterministic_coefficient(predictions, targets)
+    NSE = get_Nash_efficiency_coefficient(predictions, targets)
+    KGE = get_Kling_Gupta_efficiency(predictions, targets)
 
     ideal_MSE = get_mean_squared_error(predictions*ideal_w, targets)
     ideal_DC = get_deterministic_coefficient(predictions*ideal_w, targets)
+    ideal_NSE = get_Nash_efficiency_coefficient(predictions*ideal_w, targets)
+    ideal_KGE = get_Kling_Gupta_efficiency(predictions*ideal_w, targets)
+
     writer.add_scalars('epoch_log/mean_squared_error', {'direct_test': MSE}, epoch)
     writer.add_scalars('epoch_log/deterministic_coefficient', {'direct_test': DC}, epoch)
+    writer.add_scalars('epoch_log/Nash_efficiency_coefficient', {'direct_test': NSE}, epoch)
+    writer.add_scalars('epoch_log/Kling_Gupta_efficiency', {'direct_test': KGE}, epoch)
+
     writer.add_scalars('epoch_log/mean_squared_error', {'ideal': ideal_MSE}, epoch)
     writer.add_scalars('epoch_log/deterministic_coefficient', {'ideal': ideal_DC}, epoch)
+    writer.add_scalars('epoch_log/Nash_efficiency_coefficient', {'ideal': ideal_NSE}, epoch)
+    writer.add_scalars('epoch_log/Kling_Gupta_efficiency', {'ideal': ideal_KGE}, epoch)
     writer.add_scalar('epoch_log/ideal w', ideal_w, epoch)
 
     img_scatter, img_line = plot_result(targets, predictions)
@@ -85,7 +95,7 @@ def evaluate(G, D, test_model, test_loader, TX_features, writer, epoch, total_st
 
     writer.add_scalars('step_log/W_distance',{'test': np.array(W_dis_all).mean()}, total_step)
 
-    return MSE, DC, ideal_MSE, ideal_DC
+    return MSE, DC, NSE, KGE, ideal_MSE, ideal_DC, ideal_NSE, ideal_KGE
 
 
 def train(G, test_model, train_loader, test_loader, TunXi_features, writer, save_path):
@@ -153,16 +163,16 @@ def train(G, test_model, train_loader, test_loader, TunXi_features, writer, save
 
         # Test
         test_model.backbone.load_state_dict(G.state_dict())
-        TEST_MSE, TEST_DC, ideal_MSE, ideal_DC = evaluate(G, D, test_model, test_loader, TunXi_features, writer, epoch, total_step, tsne=False)
-        tqdm.tqdm.write('Epoch: [{}/{}],  TEST_MSE: {:.5f}, TEST_DC: {:.2f}%, '.format(epoch + 1, args.N_EPOCH, TEST_MSE, TEST_DC))
+        TEST_MSE, TEST_DC, TEST_NSE, TEST_KGE, ideal_MSE, ideal_DC, ideal_NSE, ideal_KGE= evaluate(G, D, test_model, test_loader, TunXi_features, writer, epoch, total_step, tsne=False)
+        tqdm.tqdm.write('Epoch: [{}/{}],  TEST_MSE: {:.5f}, TEST_DC: {:.2f}%, TEST_NSE: {:.5f}, TEST_KGE: {:.5f}'.format(epoch + 1, args.N_EPOCH, TEST_MSE, TEST_DC, TEST_NSE, TEST_KGE))
 
         writer.add_scalar('epoch_log/learning rate', scheduler_D.get_last_lr()[-1], epoch)
 
         with open(log_file, 'a+') as f:
             if epoch == 0:
                 print('exp_description,', args.exp_description, file=f)
-                print('Epoch,TEST_MSE,TEST_DC', file=f)
-            print('{},{},{}'.format(epoch, round(TEST_MSE, 2), round(TEST_DC, 2)), file=f)
+                print('Epoch,TEST_MSE,TEST_DC,TEST_NSE, TEST_KGE', file=f)
+            print('{},{},{}, {}, {}'.format(epoch, round(TEST_MSE, 2), round(TEST_DC, 2),round(TEST_NSE, 3),round(TEST_KGE, 3)), file=f)
 
         if epoch % 50 == 0 or epoch == args.N_EPOCH - 1:
             torch.save(G.state_dict(), save_path + '/epoch_{}.pt'.format(epoch))
@@ -170,7 +180,7 @@ def train(G, test_model, train_loader, test_loader, TunXi_features, writer, save
 
     torch.save(G.state_dict(), save_path + '/last.pt'.format(epoch))
 
-    return round(TEST_MSE, 2), round(TEST_DC, 2)
+    return round(TEST_MSE, 2), round(TEST_DC, 2), round(TEST_NSE, 3), round(TEST_KGE, 3)
 
 
 def main(args):
@@ -207,7 +217,7 @@ def main(args):
                                       args.dropout, input_size, args.pre_head, args.pre_head_hidden_size,
                                       args.pre_head_num_layers, residual=False).cuda()
 
-    TunXi_input_size = 11
+    TunXi_input_size = 5
     pretrained_model = Raindrop_encoder(args.pre_backbone, args.pre_backbone_hidden_size, args.pre_backbone_num_layers,
                                         args.pre_dropout, TunXi_input_size,
                                         args.pre_head, args.pre_head_hidden_size, args.pre_head_num_layers).cuda()
@@ -223,7 +233,7 @@ if __name__ == '__main__':
     parser.add_argument('--N_EPOCH', default=100, type=int)
     parser.add_argument('--lr', default=0.0005, type=float)
     parser.add_argument('--batch_size', default=64, type=int)
-    parser.add_argument('--training_set_scale', default=1.0, type=float)
+    parser.add_argument('--training_set_scale', default=0.7, type=float)
     parser.add_argument('--train_test_split_ratio', default=0.7, type=float)
     parser.add_argument('--sample_length', default=72, type=int)
     parser.add_argument('--CRITIC_ITERS', default=5, type=int)
@@ -250,9 +260,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
     results = init_results(args,stage=2)
 
-    TEST_MSE, TEST_DC = main(args)
+    TEST_MSE, TEST_DC, TEST_NSE, TEST_KGE = main(args)
 
     results['TEST_MSE'].append(TEST_MSE)
     results['TEST_DC'].append(TEST_DC)
+    results['TEST_NSE'].append(TEST_NSE)
+    results['TEST_KGE'].append(TEST_KGE)
 
     print_results(results)

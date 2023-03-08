@@ -1,6 +1,9 @@
 import pandas as pd
 import numpy as np
 import torch
+import os
+
+from sklearn.preprocessing import MinMaxScaler
 
 
 class CSVDataset(torch.utils.data.Dataset):
@@ -22,13 +25,19 @@ class CSVDataset(torch.utils.data.Dataset):
         self.training_set_scale = training_set_scale
         self.overlapping_split = 20
 
-        csv_file = f'dataset/{dataset}/data.csv'
+        # l = os.listdir(dataset+'/')
+        # sensors = [i.split("_")[0] for i in l]
+        # sensors = list(set(sensors))
+        csv_file = f'dataset/{dataset}'
         print('--- reading', csv_file)
         df = pd.read_csv(csv_file)
         df = df.dropna()
         data = np.array(df)
+        #print(data)
 
         raindrop = data[:-self.forecast_range, :]
+        #print(raindrop)
+        #normalization
         raindrop = (raindrop - np.min(raindrop, axis=0)) / (np.max(raindrop, axis=0) - np.min(raindrop, axis=0))
         runoff_history = data[:-self.forecast_range, 0]
         runoff = data[self.forecast_range:, 0]
@@ -45,6 +54,7 @@ class CSVDataset(torch.utils.data.Dataset):
             self.raindrop = raindrop[offset:training_subset+offset, :]
             self.runoff_history = runoff_history[offset:training_subset+offset]
             self.runoff = runoff[offset:training_subset+offset]
+
         elif self.mode == 'test':
             self.raindrop = raindrop[train_test_spilt:, :]
             self.runoff_history = runoff_history[train_test_spilt:]
